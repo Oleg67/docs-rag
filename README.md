@@ -102,3 +102,7 @@ src/docs_rag/
   mcp_server.py  MCP tools
   cli.py         ingest, index, search, status, mcp
 ```
+
+## License
+
+Apache License 2.0; see [LICENSE](LICENSE).
