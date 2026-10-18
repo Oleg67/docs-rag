@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+# Your sources and paths; config.example.yaml is the template.
+config.yaml
+data/*
+!data/.gitkeep
+inbox/*
+!inbox/.gitkeep

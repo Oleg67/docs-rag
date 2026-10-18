@@ -1,0 +1,41 @@
+# Copy to config.yaml. Relative paths resolve against this file's directory.
+data_dir: data          # documents.jsonl and the embedded Qdrant index
+collection: docs
+
+# Each source has a unique name; `docs-rag ingest -s NAME` refreshes only that one, and search
+# can be restricted to source names.
+sources:
+  # Every PDF, Markdown, HTML and text file under a folder (recursively).
+  - name: inbox
+    type: folder
+    path: inbox
+    # patterns: ["**/*.pdf", "**/*.md", "**/*.txt", "**/*.html", "**/*.htm"]
+
+  # A web site: breadth-first from the start URL, same host, only URLs under path_prefix
+  # (default: the start URL's directory), robots.txt respected, at most 1 request per second.
+  # - name: example-docs
+  #   type: web
+  #   url: https://docs.example.com/guide/
+  #   max_pages: 100
+  #   pdfs: true        # also fetch PDFs linked from those pages (same host)
+
+embedding:
+  model: intfloat/multilingual-e5-base   # ~100 languages; 768-dim
+  query_prefix: "query: "                # E5 prefixes; use "" for models without them
+  passage_prefix: "passage: "
+  # device: cuda
+
+bm25:
+  language: english     # Snowball stemmer: english, russian, german, ...; null = no stemming
+
+chunking:
+  max_characters: 1600
+  overlap_paragraphs: 1
+
+search:
+  limit: 6
+  min_score: 0.80       # dense cosine cutoff; E5 scores unrelated text at ~0.75
+
+crawler:
+  user_agent: "docs-rag/0.1 (local research crawler)"
+  delay_seconds: 1.0    # at least 1.0
